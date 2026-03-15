@@ -79,6 +79,7 @@ export default function Home() {
           } else if (line.startsWith('data: ')) {
             const data = line.slice(6);
             if (data === '[DONE]') continue;
+            if (!data.trim()) continue;
             
             try {
               const parsed = JSON.parse(data);
@@ -102,8 +103,8 @@ export default function Home() {
                 // 错误事件，显示错误信息
                 console.error('SSE Error:', parsed.error);
               }
-            } catch (error) {
-              console.error('Error parsing SSE data:', error);
+            } catch {
+              // JSON解析失败，跳过此数据
             }
           }
         }
